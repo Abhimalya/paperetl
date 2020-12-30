@@ -247,6 +247,7 @@ class Execute(object):
         if not entryfile:
             entryfile = os.path.join(indir, "entry-dates.csv")
 
+            
         # Load in memory date lookup
         with open(entryfile, mode="r") as csvfile:
             for row in csv.DictReader(csvfile):
@@ -260,7 +261,8 @@ class Execute(object):
                 sha = Execute.getHash(row)
 
                 # Lookup record
-                uid, date = entries[sha]
+                if sha in entries:
+                    uid, date = entries[sha]
 
                 # Store date if cord uid maps to value in entries
                 if row["cord_uid"] == uid:
